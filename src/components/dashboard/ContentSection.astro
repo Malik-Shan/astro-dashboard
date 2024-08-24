@@ -1,0 +1,10 @@
+---
+interface Props{
+  body_height:string;
+  topbar_height:string;
+}
+const {body_height,topbar_height} = Astro.props;
+---
+<div class='w-full overflow-y-auto p-4' style={{height:`calc(${body_height} - ${topbar_height})`}}>
+  <slot />
+</div>

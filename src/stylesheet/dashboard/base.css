@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/*
+======= Documentation =========
+1) Pri & Sec button
+2) Nav Button
+*/
+@layer base{
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+  }
+  :root{
+    --clr-pri:#2483ac;
+    --clr-sec:#232630;
+    --clr-ter:#40434e;
+
+    --clr-bg:#131313;
+    --clr-lo:#831414;
+
+    --txt-lg:#ffffff;
+    --txt-dk:#546067;
+  }
+  body {
+    line-height: 1.5;
+    background-color:var(--clr-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  input, button, textarea, select {
+    font: inherit;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+}
+/*######################################################*/
+/* ---------------  Pri & Sec Button  ------------------*/
+/*######################################################*/
+/*  
+  --btn-pri-bg
+  --btn-pri-clr
+  --btn-pri-border
+  --btn-pri-br
+  --btn-pri-p
+
+  --btn-sec-bg
+  --btn-sec-clr
+  --btn-sec-border
+  --btn-sec-br
+  --btn-sec-p
+
+  --btn-disabled-bg
+  --btn-disabled-clr
+  --btn-disabled-border
+  --btn-disabled-br
+  --btn-disabled-p
+
+  --btn-icon-size
+  --btn-icon-m
+*/
+.btn{
+  --btn-default-icon-size:1rem;
+  --btn-default-icon-m:0 .4rem 0 0;
+
+  cursor:pointer;
+  transition: all 150ms linear;
+}
+.btn-pri,
+.btn-sec,
+.btn-disabled{
+  --btn-default-br:.4rem;
+  --btn-default-border:3px;
+  --btn-default-p:.4rem .8rem;
+}
+.btn-pri{
+  background-color:var(--btn-bg, var(--clr-pri));
+  color:var(--btn-clr, white);
+  fill:var(--btn-clr, white);
+
+  border-radius:var(--btn-br,var(--btn-default-br));
+  border:var(--btn-border,var(--btn-default-border)) solid var(--btn-border-clr,var(--clr-pri));
+
+  padding:var(--btn-p,var(--btn-default-p));
+}
+.btn-pri:hover{
+  --btn-bg:transparent;
+  --btn-clr:var(--clr-pri);
+}
+.btn-sec{
+  background-color:var(--btn-bg, tansparent);
+  color:var(--btn-clr, var(--clr-pri));
+  fill:var(--btn-clr, var(--clr-pri));
+
+  border-radius:var(--btn-br,var(--btn-default-br));
+  border:var(--btn-border,var(--btn-default-border)) solid var(--btn-border-clr,var(--clr-pri));
+
+  padding:var(--btn-p,var(--btn-default-p));
+}
+.btn-sec:hover{
+  --btn-bg:var(--clr-pri);
+  --btn-clr:var(--txt-lg);
+}
+.btn-disabled,
+.btn-pri:disabled,
+.btn-sec:disabled{
+  background-color:var(--btn-bg, var(--clr-sec));
+  color:var(--btn-clr, white);
+
+  border-radius:var(--btn-br,var(--btn-default-br));
+  border:var(--btn-border,var(--btn-default-border)) solid var(--btn-border-clr,var(--clr-sec));
+
+  padding:var(--btn-p,var(--btn-default-p));
+  pointer-events:none;
+}
+/* --------- Button Icon ------------ */
+.btn .btn-icon{
+  display:flex;
+
+  max-width:100%;
+  width:var(--btn-icon-size,var(--btn-default-icon-size));
+
+  margin:var(--btn--icon-m,var(--btn-default-icon-m));
+
+  fill:inherit;
+  color:inherit;
+}
+/*#################################################*/
+/* ---------------  Nav Button  ------------------*/
+/*#################################################*/
+
+  /* 
+* ======== Available Properties ========
+* ### Primary Button
+  --btn-nav-pri-bg
+  --btn-nav-pri-clr
+  --btn-nav-pri-br
+  --btn-nav-pri-p
+
+  ### Secondary Button
+  --btn-nav-sec-bg
+  --btn-nav-sec-clr
+  --btn-nav-sec-br
+  --btn-nav-sec-p 
+
+  ### Disabled Button
+  --btn-nav-disabled-bg
+  --btn-nav-disbled-clr
+  --btn-nav-disabled-p
+*/
+.btn-nav{
+  --btn-nav-default-p:.45rem 1.25rem;
+  --btn-nav-default-br:0rem;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.btn-nav-pri{
+
+  background-color:var(--btn-nav-pri-bg, var(--clr-bg));
+  color:var(--btn-nav-pri-clr, white);
+
+  border-radius:var(--btn-nav-pri-br,var(--btn-nav-default-br));
+
+  padding:var(--btn-nav-pri-p,var(--btn-nav-default-p));
+}
+.btn-nav-pri:hover{
+  background-color:var(--btn-nav-pri-bg, var(--clr-sec));
+  color:var(--btn-nav-pri-clr, white);
+}
+.btn-nav-sec{
+  background-color:var(--btn-nav-sec-bg, var(--clr-sec));
+  color:var(--btn-nav-sec-clr, white);
+
+  border-radius:var(--btn-nav-sec-br,var(--btn-nav-default-br));
+
+  padding:var(--btn-nav-sec-p,var(--btn-nav-default-p));
+}
+.btn-nav-sec:hover{
+  background-color:var(--btn-nav-sec-bg, var(--clr-bg));
+  color:var(--btn-nav-sec-clr, white);
+}
+.btn-nav-disabled,
+.btn-nav-pri:disabled,
+.btn-nav-sec:disabled{
+  background-color:var(--btn-nav-disabled-bg, var(--clr-ter));
+  color:var(--btn-nav-disabled-clr, white);
+
+  padding:var(--btn-disabled-p,var(--btn-nav-default-p));
+  pointer-events:none;
+}
+.btn-nav-lo{
+  background-color:var(--btn-nav-lo-bg, var(--clr-lo) );
+  color:var(--btn-nav-lo-clr, white);
+
+  border-radius:var(--btn-nav-lo-br,var(--btn-nav-default-br));
+
+  padding:var(--btn-nav-lo-p,var(--btn-nav-default-p));
+}
+@layer components{
+  .input_group{
+    @apply flex flex-col w-full;
+  }
+  .input_group label{
+    @apply text-[--txt-lg] text-lg mb-1;
+  }
+  .input_group > input,
+  .input_group > .input,
+  .input_group > textarea{
+    @apply p-1 px-2 rounded-md focus-visible:outline focus-visible:outline-[--clr-pri] focus-visible:outline-4;
+  }
+}
+@layer utilities{
+}

@@ -1,0 +1,43 @@
+---
+import {getEntry} from 'astro:content';
+interface Props{
+  width:string;
+  body_height:string;
+  topbar_height:string;
+}
+const {width,body_height,topbar_height} = Astro.props;
+
+const nav = (await getEntry('navigation','nav')).data.navigations;
+const pathItems = Astro.request.url.split('/')
+const currentPath = pathItems.slice(pathItems.indexOf('astro-admin')).join('/');
+---
+<aside class='flex flex-col justify-between border-r-2 border-r-[--clr-ter]' style={{minWidth:`${width}`,height:`calc(${body_height} - ${topbar_height})`}}>
+  <nav class='flex flex-col gap-1 w-full h-full p-2 overflow-y-auto'>
+    {
+    nav.map((n:any) => (
+      n.nav[2].sub_nav.length === 0 ? 
+    (
+    <a href={n.nav[1].href}  id='page-2' aria-target='#page-2-sub-nav' class:list={['btn btn-nav btn-nav-sec ', `/${currentPath}` === n.nav[1].href ? ('[--btn-nav-sec-bg:var(--clr-pri);]') : ('[--btn-nav-sec-bg:var(--clr-sec);]')]}>{n.nav[0].title}</a>
+    ) : 
+    (
+    <details class:list={['sub-nav-wrapper relative group/sub-nav', n.nav[2].sub_nav.some((s:any) => (s.nav[1].href === `/${currentPath}`)) && 'active']} open={n.nav[2].sub_nav.some((s:any) => (s.nav[1].href === `/${currentPath}`)) || undefined}>
+
+      <summary  id='page-2' class:list={['btn btn-nav btn-nav-pri mb-1 group-[.active]/sub-nav:[--btn-nav-pri-bg:var(--clr-pri);] group-open/sub-nav:[--btn-nav-pri-bg:var(--clr-pri);]']}>
+        {n.nav[0].title}
+        <i class="fa-solid fa-angle-up rotate-180" class:list={['group-open/sub-nav:rotate-0']}></i>
+      </summary>
+
+      <div id='page-2-sub-nav' class='flex flex-col'>
+        {
+        n.nav[2].sub_nav.map((s:any) => (
+        <a href={s.nav[1].href} class:list={['relative btn btn-nav btn-nav-pri', `/${currentPath}` === s.nav[1].href && 'before:content-[""] before:h-full before:w-1 before:bg-[--clr-pri] before:absolute before:left-0 before:top-0']}>{s.nav[0].title}</a>
+        ))
+        }
+      </div>
+    </details>
+      )
+    ))
+    }
+  </nav>
+  <button class='btn btn-nav btn-nav-lo hover:bg-red-700'>Logout</button>
+</aside>

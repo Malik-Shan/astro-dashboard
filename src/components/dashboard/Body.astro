@@ -1,0 +1,28 @@
+---
+interface Props{
+  body_height:string;
+  topbar_height:string;
+  sidenav_width:string;
+}
+const {body_height,topbar_height,sidenav_width} = Astro.props;
+
+import Topbar from './Topbar.astro';
+import SideNav from './SideNav.astro';
+import ContentSection from './ContentSection.astro';
+---
+<body class='flex' style={{minHeight: `${body_height}`}}>
+  <div class='w-full min-h-full'>
+
+    <Topbar topbar_height={topbar_height} heading='Admin'></Topbar>
+
+    <div class='flex flex-row'>
+
+      <SideNav width={sidenav_width} body_height={body_height} topbar_height={topbar_height}></SideNav>
+      <ContentSection body_height={body_height} topbar_height={topbar_height}>
+        <slot/>
+      </ContentSection>
+
+    </div>
+  </div>
+  <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
+</body>

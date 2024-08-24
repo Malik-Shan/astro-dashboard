@@ -1,0 +1,97 @@
+---
+interface Props{
+  id:string;
+  class:string;
+  name:string;
+  placeholder:string;
+  outline_color:string;
+  outline_width:string;
+}
+const {id, class:className,name,placeholder,outline_color,outline_width} = Astro.props;
+---
+<input type='text' name={name} id={id} hidden aria-hidden='true' />
+<div data-type='tag-input' role='presentation' class={className}>
+  <!-- All current tags --> 
+  <div data-show-tags>
+    <div data-tag >
+      <span data-tag-value>javascript</span>
+      <button type='button' tabindex='-1' data-tag-remove>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Input New Tags -->
+  <input data-input-tag data-input-name={name} type='text'placeholder={placeholder}
+    autocomplete="off" autocapitalize="none" autocorrect="off" dir='ltr'
+    aria-label='Enter tag. Enter multiple tags separated by comma.'/>
+</div>
+<template>
+  <div data-tag >
+    <span data-tag-value>javascript</span>
+    <button type='button' tabindex='-1' data-tag-remove>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+    </button>
+  </div>
+</template>
+<style is:global define:vars={{outline_color, outline_width}}>
+[data-type='tag-input']{
+  display:flex;
+  flex-direction:row;
+  background-color:white;
+}
+[data-type='tag-input']:has([data-input-tag]:focus-visible){
+  outline:var(--outline_color) solid var(--outline_width);
+}
+[data-type='tag-input'] [data-show-tags]{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:center;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag]{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+
+  padding:.2rem .4rem;
+  margin: 0 0 0 .25rem;
+
+  border-radius:100px;
+
+  background-color:#50c878;
+  color:#023020;
+  fill:#023030;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag]:first-child{
+  margin:0 !important;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag] span{
+  display:block;
+  padding: 0 0 0 .4rem;
+
+  font-size:.90rem;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag] button{
+  margin-left:.3rem;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag] button:hover{
+  fill:#E32636;
+}
+[data-type='tag-input'] [data-show-tags] [data-tag] button > svg{
+  display:block;
+  width:30px;
+  fill:inherit;
+}
+[data-type='tag-input'] [data-input-tag]{
+  margin: 0 0 0 .35rem;
+  width:100%;
+  min-width:90px;
+
+  padding:0;
+  outline:none;
+}
+[data-type='tag-input'] [data-show-tags]:empty + [data-input-tag]{
+  margin:0 0 0 0 !important;
+}
+</style>

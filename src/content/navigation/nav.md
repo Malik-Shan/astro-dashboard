@@ -1,0 +1,37 @@
+---
+title: "navigation"
+navigations:
+    - nav:
+        - title: 'Dashboard'
+        - href: '/astro-admin/dashboard'
+        - sub_nav:
+            - nav:
+                - title: 'Home'
+                - href: '/astro-admin/dashboard'
+    - nav:
+        - title: 'Posts'
+        - href: '/astro-admin/posts'
+        - sub_nav:
+            - nav:
+                - title: 'All Posts'
+                - href: '/astro-admin/posts'
+            - nav:
+                - title: 'Create Post'
+                - href: '/astro-admin/posts/createpost'
+            - nav:
+                - title: 'Categories'
+                - href: '/astro-admin/posts/categories'
+            - nav:
+                - title: 'Tags'
+                - href: '/astro-admin/posts/tags'
+    - nav:
+        - title: 'Products'
+        - href: '/astro-admin/products'
+        - sub_nav:
+            - nav:
+                - title: 'All Products'
+                - href: '/astro-admin/products'
+            - nav:
+                - title: 'Create Product'
+                - href: '/astro-admin/products/createproduct'
+---

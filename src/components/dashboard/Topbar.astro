@@ -1,0 +1,10 @@
+---
+interface Props{
+  topbar_height:string;
+  heading:string;
+}
+const {topbar_height,heading} = Astro.props;
+---
+<header class='flex flex-row items-center top-bar  z-10 border-b-[--clr-ter] border-b-2 px-4' style={{height: `${topbar_height}`}}>
+  <h2 class='text-xl text-white'>{heading}</h2>
+</header>
