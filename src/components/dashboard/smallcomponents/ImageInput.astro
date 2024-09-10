@@ -1,0 +1,107 @@
+---
+interface Props{
+  name?:string;
+  id:string;
+  class?:string;
+  label?:string;
+  description?:string;
+  multiple?:boolean;
+  imgType?:Array<string>;
+}
+const {name,label,class:className,id,description,multiple,imgType} = Astro.props;
+const accept:Array<string> = [];
+if(imgType && imgType.length > 0){
+  imgType.map(i=>accept.push(`image/${i}`));
+}
+---
+<div class='input_group'>
+  {label && <span class='block mb-1 text-lg text-white non-sr-only' id='img-input-label'>{label}</span>}
+  <label for={id} class='uploadPresenation flex min-h-[200px] rounded-[5px] p-[1.75rem] cursor-pointer bg-[--clr-sec] has-[input:focus-visible]:outline has-[input:focus-visible]:outline-4 has-[input:focus-visible]:outline-[--clr-pri] has-[input:disabled]:bg-[--clr-disabled] has-[input:disabled]:cursor-not-allowed'>
+    <span class='sr-only'>Image upload</span>
+    <div data-img-container class='img-container'>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+    </div>
+    <input data-image-input disabled class='sr-only' id={id} aria-labelledby="img-input-label" aria-describedby="image-input-des" name={name ? name : undefined} type='file' multiple={multiple ? true : undefined} accept={imgType && imgType.length > 0 ? `${[...accept]}` : 'image/*'}/>
+  </label>
+  <span id='image-input-desc' class='block text-slate-500 text-sm'>{description}</span>
+</div>
+<template data-upload-img>
+  <div data-uploaded-img>
+    <button tabindex='-1' data-img-remove data-index type='button' aria-label='Remove image'>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    </button>
+    <img data-img/>
+  </div>
+</template>
+<style>
+.uploadPresenation [data-img-container]{
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.215rem;
+
+  border:2px dashed var(--clr-ter);
+  border-radius:5px;
+  transition:border 150ms linear;
+}
+.uploadPresenation [data-img-container] > svg{
+  display:block;
+  min-width:100%;
+  height:100px;
+  fill:var(--clr-ter);
+}
+.uploadPresenation [data-img-container]:has([data-uploaded-img]) > svg{
+  display:none;
+}
+[data-uploaded-img]{
+  position:relative;
+}
+[data-uploaded-img] [data-img]{
+  display:block;
+  width:100%;
+  max-height:150px;
+  box-shadow:0px 0px 10px hsl(0,0%,0%,30%);
+  border-radius:5px;
+  overflow:hidden;
+  border:1px solid var(--clr-ter);
+}
+[data-uploaded-img] [data-img-remove]{
+  --size:25px;
+  position:absolute;
+  right:calc(var(--size) / 3 * -1);
+  top:calc(var(--size) / 3 * -1);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  height:var(--size);
+  width:var(--size);
+
+  color:white;
+  background-color:var(--clr-lo);
+
+  border-radius:25px;
+  padding:.125rem;
+
+  visibility:hidden;
+}
+[data-uploaded-img] [data-img-remove]:hover{
+  background-color:var(--clr-danger);
+}
+[data-img-remove] > svg{
+  max-width:100%;
+  width:calc(var(--size) / 1.5);
+  height:calc(var(--size) / 1.5);
+  aspect-ratio:1 / 1;
+  fill:white;
+}
+[data-uploaded-img]:hover [data-img-remove]{
+  visibility: visible;
+  z-index:1;
+}
+</style>

@@ -1,6 +1,7 @@
 ---
 import DashboardLayout from '../../../layouts/DashboardLayout.astro';
-import TagsInput from '../../../components/dashboard/smallcomponents/TagsInput.astro';
+import TagInput from '../../../components/dashboard/smallcomponents/TagInput.astro';
+import ImageInput from '../../../components/dashboard/smallcomponents/ImageInput.astro';
 ---
 <DashboardLayout title='Create Product'>
   <div class='flex flex-row justify-between items-center'>
@@ -41,111 +42,132 @@ import TagsInput from '../../../components/dashboard/smallcomponents/TagsInput.a
 
     <div class='input_group'>
       <label for='p_test'>Tags</label>
-      <TagsInput id='p_test' name='Tags' placeholder='Enter Tags' class='input' 
-      outline_color='var(--clr-pri)' outline_width='4px'></TagsInput>
+      <TagInput id={'p_tag'} name={'tag'} placeholder={'Enter Tag'} class='input' 
+        outline_color='var(--clr-pri)' outline_width='4px' message={"Enter tags indiviually or use comma (,) to add multiple tags."}>
+      </TagInput>
     </div>
+
+    <ImageInput id='p_image' imgType={['webp','jpeg','png']} description='Use WEBP images 16/7 ratio.' multiple={true} ></ImageInput>
 
     <div class='input_group'>
       <label for='p_desc'>Description</label>
       <textarea class='resize-none' rows='7' id='p_desc' name='p_desc'placeholder='Product Description' />
     </div>
-
   </form>
 </DashboardLayout>
+<script>
+  import {TagInputHandler} from '../../../script/dashboard/taginput';
+  import {ImageUploadHandler} from '../../../script/dashboard/ImageUploadHandler';
+  new TagInputHandler('#p_tag', true).initiateHandler();
+  new ImageUploadHandler('#p_image',true).initiateUploader((img)=>{
+    const image = new Image();
+    // Compress the image to 80% quality
+    const i = img.split(',');
+    const type = i[0].split(';')[0].split(':')[1];
+    const d = atob(i[1]);
+    const length = d.length;
+    const array = new Uint8Array(length);
+    let n = d.length;
+    while(n--){
+      array[n] = d.charCodeAt(n);
+    };
+    console.log(array.length / 1024);
+    const file = new File([array],"Img",{type:type});
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+    };
+    reader.readAsDataURL(file);
+    console.log(file);
+    return img;
+  });
+</script>
+
 <style is:global>
 .ck-dropdown__panel{
   max-width:300px !important;
   min-width:300px !important;
 }
 .editor-container_classic-editor .editor-container__editor {
-	min-width: 795px;
-	max-width: 795px;
+  min-width: 795px;
+  max-width: 795px;
 }
 .ck-editor__editable {
   min-height: 250px;
 }
 </style>
 <script>
-document.querySelector('#create-product').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const fd = new FormData(e.target as HTMLFormElement);
-  fd.set('p_test', 'test alue her man what can isay.');
-  (e.target as HTMLFormElement).submit();
-})
-</script>
-<script>
-import {
-  ClassicEditor,
-  AccessibilityHelp,
-  Alignment,
-  Autoformat,
-  AutoImage,
-  AutoLink,
-  Autosave,
-  BlockQuote,
-  Bold,
-  CloudServices,
-  Code,
-  CodeBlock,
-  Essentials,
-  FindAndReplace,
-  FontBackgroundColor,
-  FontColor,
-  FontFamily,
-  FontSize,
-  GeneralHtmlSupport,
-  Heading,
-  Highlight,
-  HorizontalLine,
-  HtmlComment,
-  HtmlEmbed,
-  ImageBlock,
-  ImageCaption,
-  ImageInline,
-  ImageInsert,
-  ImageInsertViaUrl,
-  ImageResize,
-  ImageStyle,
-  ImageTextAlternative,
-  ImageToolbar,
-  ImageUpload,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  LinkImage,
-  List,
-  ListProperties,
-  MediaEmbed,
-  Paragraph,
-  PasteFromOffice,
-  RemoveFormat,
-  SelectAll,
-  ShowBlocks,
-  SimpleUploadAdapter,
-  SourceEditing,
-  SpecialCharacters,
-  SpecialCharactersArrows,
-  SpecialCharactersCurrency,
-  SpecialCharactersEssentials,
-  SpecialCharactersLatin,
-  SpecialCharactersMathematical,
-  SpecialCharactersText,
-  Strikethrough,
-  Style,
-  Subscript,
-  Superscript,
-  Table,
-  TableCaption,
-  TableCellProperties,
-  TableColumnResize,
-  TableProperties,
-  TableToolbar,
-  TextTransformation,
-  TodoList,
-  Underline,
-  Undo
-} from 'ckeditor5';
+  import {
+    ClassicEditor,
+    AccessibilityHelp,
+    Alignment,
+    Autoformat,
+    AutoImage,
+    AutoLink,
+    Autosave,
+    BlockQuote,
+    Bold,
+    CloudServices,
+    Code,
+    CodeBlock,
+    Essentials,
+    FindAndReplace,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
+    FontSize,
+    GeneralHtmlSupport,
+    Heading,
+    Highlight,
+    HorizontalLine,
+    HtmlComment,
+    HtmlEmbed,
+    ImageBlock,
+    ImageCaption,
+    ImageInline,
+    ImageInsert,
+    ImageInsertViaUrl,
+    ImageResize,
+    ImageStyle,
+    ImageTextAlternative,
+    ImageToolbar,
+    ImageUpload,
+    Indent,
+    IndentBlock,
+    Italic,
+    Link,
+    LinkImage,
+    List,
+    ListProperties,
+    MediaEmbed,
+    Paragraph,
+    PasteFromOffice,
+    RemoveFormat,
+    SelectAll,
+    ShowBlocks,
+    SimpleUploadAdapter,
+    SourceEditing,
+    SpecialCharacters,
+    SpecialCharactersArrows,
+    SpecialCharactersCurrency,
+    SpecialCharactersEssentials,
+    SpecialCharactersLatin,
+    SpecialCharactersMathematical,
+    SpecialCharactersText,
+    Strikethrough,
+    Style,
+    Subscript,
+    Superscript,
+    Table,
+    TableCaption,
+    TableCellProperties,
+    TableColumnResize,
+    TableProperties,
+    TableToolbar,
+    TextTransformation,
+    TodoList,
+    Underline,
+    Undo
+  } from 'ckeditor5';
 
 import 'ckeditor5/ckeditor5.css';
 

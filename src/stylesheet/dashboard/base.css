@@ -20,6 +20,8 @@
 
     --clr-bg:#131313;
     --clr-lo:#831414;
+    --clr-danger:#E31837;
+    --clr-disabled:hsl(0,0%,20%);
 
     --txt-lg:#ffffff;
     --txt-dk:#546067;
@@ -124,7 +126,7 @@
   display:flex;
 
   max-width:100%;
-  width:var(--btn-icon-size,var(--btn-default-icon-size));
+  min-width:var(--btn-icon-size,var(--btn-default-icon-size));
 
   margin:var(--btn--icon-m,var(--btn-default-icon-m));
 
@@ -214,7 +216,7 @@
   .input_group > input,
   .input_group > .input,
   .input_group > textarea{
-    @apply p-1 px-2 rounded-md focus-visible:outline focus-visible:outline-[--clr-pri] focus-visible:outline-4;
+    @apply p-1 px-2 text-white border-2 border-[--clr-ter] bg-[--clr-sec] rounded-md focus-visible:outline focus-visible:outline-[--clr-pri] focus-visible:outline-4;
   }
 }
 @layer utilities{
